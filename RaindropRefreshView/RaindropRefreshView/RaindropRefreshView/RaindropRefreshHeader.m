@@ -22,9 +22,9 @@
     self.automaticallyChangeAlpha = YES;
     
     raindropRefreshView = [[RaindropRefreshView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, 0)];
-    raindropRefreshView.shapeColor = [UIColor redColor];
+    raindropRefreshView.shapeColor = [UIColor colorWithWhite:0.7 alpha:1];//手机QQ下拉刷新的颜色
     UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    activityIndicatorView.color = raindropRefreshView.shapeColor;
+    activityIndicatorView.color = [UIColor colorWithWhite:0.5 alpha:1];//颜色略深一点更明显//raindropRefreshView.shapeColor;
     [activityIndicatorView startAnimating];//一直旋转，只会设置alpha为0或1.
     raindropRefreshView.refreshingIndicator = activityIndicatorView;
     [raindropRefreshView setupControl];

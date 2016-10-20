@@ -81,7 +81,6 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p){
             _highlightLayer.path = nil;
             return;
         }
-        CGMutablePathRef path = CGPathCreateMutable();
         
         //随着下拉，外界会修改self.frame使控件显示出来。当圆球部分完全显示出来时，verticalShift就会大于0；接下来显示圆球下拉变细的动画，这时percentage就会从1逐渐减小至0
         CGFloat verticalShift = MAX(0, self.frame.size.height - kDistanceForTopCircle);
@@ -104,6 +103,7 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p){
             }
         }
         
+        CGMutablePathRef path = CGPathCreateMutable();
         //Top semicircle
         CGPathAddArc(path, NULL, topOrigin.x, topOrigin.y, currentTopRadius, 0, M_PI, YES);
         
@@ -145,6 +145,9 @@ static inline CGFloat lerp(CGFloat a, CGFloat b, CGFloat p){
                 CGFloat angle = (proportion - kProportionBeginToShowCircle) / (1 - kProportionBeginToShowCircle) * kMaxAngle;
                 CGPathAddArc(arrowPath, NULL, topOrigin.x, topOrigin.y, arrowBigRadius, 0, angle, NO);
                 CGPathAddArc(arrowPath, NULL, topOrigin.x, topOrigin.y, arrowSmallRadius, angle, 0, YES);
+            }
+            else{
+                CGPathMoveToPoint(arrowPath, NULL, topOrigin.x, topOrigin.y);//即使不需要显示圆弧，也要在arrowPath中设置一个点，否则当CGPathCloseSubpath时会报错“no current point”
             }
         }
         else if(verticalShift < kMaxDistance){
